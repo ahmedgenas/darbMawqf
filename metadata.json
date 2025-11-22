@@ -1,0 +1,5 @@
+{
+  "name": "Arabic PDF Data Extractor",
+  "description": "An AI-powered tool to extract structured data (fines, plates, dates) from PDFs with perfect Arabic text recognition, replacing brittle Regex scripts.",
+  "requestFramePermissions": []
+}
