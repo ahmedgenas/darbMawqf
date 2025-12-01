@@ -50,15 +50,30 @@ const App: React.FC = () => {
 
     // Add BOM for Excel to recognize UTF-8 (crucial for Arabic)
     const BOM = "\uFEFF";
-    const headers = ["Fine Number", "Plate Number", "Fine Date", "Fine Type (AR)", "Fine Type (EN)", "Fine Amount", "Reference No"];
+    const headers = [
+        "Traffic Number", 
+        "English Name", 
+        "Fine Number", 
+        "Plate Number", 
+        "Fine Date", 
+        "Fine Type (AR)", 
+        "Fine Type (EN)", 
+        "Fine Amount", 
+        "Reference No"
+    ];
     
     const csvContent = [
       headers.join(","),
       ...data.map(row => {
         // Escape quotes in fields
+        const safeTraffic = `"${(row.trafficNumber || '').replace(/"/g, '""')}"`;
+        const safeName = `"${(row.englishName || '').replace(/"/g, '""')}"`;
         const safeTypeAr = `"${(row.fineType || '').replace(/"/g, '""')}"`; 
         const safeTypeEn = `"${(row.fineTypeEn || '').replace(/"/g, '""')}"`; 
+        
         return [
+            safeTraffic,
+            safeName,
             row.fineNumber, 
             row.plateNumber, 
             row.fineDate, 
@@ -70,11 +85,20 @@ const App: React.FC = () => {
       })
     ].join("\n");
 
+    // Determine filename: [English Name]_[Date].csv
+    let fileNamePrefix = "fines_output";
+    if (data[0] && data[0].englishName) {
+        // Sanitize the English Name for filename use
+        fileNamePrefix = data[0].englishName.replace(/[^a-zA-Z0-9-_ ]/g, '').trim().replace(/\s+/g, '_');
+    }
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const fullFileName = `${fileNamePrefix}_${today}.csv`;
+
     const blob = new Blob([BOM + csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", "fines_output.csv");
+    link.setAttribute("download", fullFileName);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

@@ -1,4 +1,6 @@
 export interface FineRecord {
+  trafficNumber: string; // Extracted from header
+  englishName: string;   // Extracted from header
   fineNumber: string;
   plateNumber: string;
   fineDate: string;

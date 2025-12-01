@@ -37,7 +37,8 @@ const DataTable: React.FC<DataTableProps> = ({ data, onDownload, onReset }) => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Traffic No</th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">English Name</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fine Number</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plate</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
@@ -49,7 +50,8 @@ const DataTable: React.FC<DataTableProps> = ({ data, onDownload, onReset }) => {
           <tbody className="bg-white divide-y divide-gray-200">
             {data.map((row, idx) => (
               <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{row.referenceNo || idx + 1}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">{row.trafficNumber}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{row.englishName}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{row.fineNumber}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 bg-yellow-50 font-mono rounded-md mx-2">{row.plateNumber}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{row.fineDate}</td>
